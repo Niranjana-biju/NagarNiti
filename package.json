@@ -16,6 +16,7 @@
     "@deck.gl/react": "^9.3.5",
     "@google/generative-ai": "^0.24.1",
     "@vis.gl/react-google-maps": "^1.8.3",
+    "express": "^5.2.1",
     "firebase": "^12.15.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
