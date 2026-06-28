@@ -52,6 +52,7 @@ export default function ReportPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [showPortalGuide, setShowPortalGuide] = useState(false)
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0]
@@ -287,7 +288,7 @@ setAnalysis(analysisResult)
             {/* Report filed badge */}
             <div style={{ backgroundColor: '#052e16', border: '1px solid #166534', borderRadius: '14px', padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <p style={{ color: '#475569', fontSize: '12px' }}>Report Successfully Filed</p>
+                <p style={{ color: '#475569', fontSize: '12px' }}>Complaint Ready for Submission</p>
                 <p style={{ color: '#22c55e', fontWeight: 700, fontSize: '16px' }}>{reportId}</p>
               </div>
               <span style={{ fontSize: '28px' }}>✅</span>
@@ -346,28 +347,151 @@ setAnalysis(analysisResult)
             )}
 
             {/* Complaint */}
-            {complaint && (
-              <div style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '24px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                  <p style={{ color: '#475569', fontSize: '12px', letterSpacing: '0.1em', fontWeight: 600 }}>📝 COMPLAINT DRAFT</p>
-                  <button
-                    onClick={handleCopy}
-                    style={{
-                      padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: 600,
-                      backgroundColor: copied ? '#052e16' : '#0c1a3a',
-                      color: copied ? '#22c55e' : '#3b82f6',
-                      border: `1px solid ${copied ? '#166534' : '#1e3a8a'}`,
-                      cursor: 'pointer', transition: 'all 0.2s'
-                    }}
-                  >
-                    {copied ? '✓ Copied!' : 'Copy'}
-                  </button>
-                </div>
-                <pre style={{ color: '#64748b', fontSize: '12px', whiteSpace: 'pre-wrap', fontFamily: 'inherit', backgroundColor: '#0a0f1a', border: '1px solid #1e293b', borderRadius: '10px', padding: '16px', maxHeight: '240px', overflowY: 'auto', lineHeight: 1.6 }}>
-                  {complaint}
-                </pre>
-              </div>
-            )}
+{complaint && (
+  <div style={{
+    backgroundColor: '#0f172a',
+    border: '1px solid #1e293b',
+    borderRadius: '16px',
+    padding: '24px'
+  }}>
+
+    <p style={{
+      color: '#475569',
+      fontSize: '12px',
+      letterSpacing: '0.1em',
+      fontWeight: 600,
+      marginBottom: '16px'
+    }}>
+      📝 COMPLAINT READY FOR SUBMISSION
+    </p>
+
+    {/* Action Buttons */}
+
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      marginBottom: '18px'
+    }}>
+
+      <button
+        onClick={handleCopy}
+        style={{
+          width: '100%',
+          padding: '14px',
+          borderRadius: '10px',
+          backgroundColor: copied ? '#052e16' : '#0c1a3a',
+          color: copied ? '#22c55e' : '#3b82f6',
+          border: `1px solid ${copied ? '#166534' : '#1e3a8a'}`,
+          cursor: 'pointer',
+          fontWeight: 600
+        }}
+      >
+        {copied ? '✓ Copied' : '📋 Copy Complaint'}
+      </button>
+
+      <button
+        onClick={() => {
+          window.open('https://bbmp.gov.in/', '_blank')
+          setShowPortalGuide(true)
+        }}
+        style={{
+          width: '100%',
+          padding: '14px',
+          borderRadius: '10px',
+          backgroundColor: '#1a0f00',
+          color: '#f59e0b',
+          border: '1px solid #854d0e',
+          cursor: 'pointer',
+          fontWeight: 600
+        }}
+      >
+        🌐 Open BBMP Sahaaya 2.0
+      </button>
+
+      <button
+        onClick={() => window.open('tel:1533')}
+        style={{
+          width: '100%',
+          padding: '14px',
+          borderRadius: '10px',
+          backgroundColor: '#0a0f1a',
+          color: '#94a3b8',
+          border: '1px solid #1e293b',
+          cursor: 'pointer',
+          fontWeight: 600
+        }}
+      >
+        📞 Call BBMP Helpline (1533)
+      </button>
+
+    </div>
+
+    <pre
+      style={{
+        color: '#64748b',
+        fontSize: '12px',
+        whiteSpace: 'pre-wrap',
+        fontFamily: 'inherit',
+        backgroundColor: '#0a0f1a',
+        border: '1px solid #1e293b',
+        borderRadius: '10px',
+        padding: '16px',
+        maxHeight: '240px',
+        overflowY: 'auto',
+        lineHeight: 1.6
+      }}
+    >
+      {complaint}
+    </pre>
+
+    {showPortalGuide && (
+      <div
+        style={{
+          marginTop: '18px',
+          backgroundColor: '#0a0f1a',
+          border: '1px solid #1e293b',
+          borderRadius: '10px',
+          padding: '16px'
+        }}
+      >
+        <p style={{
+          color: '#22c55e',
+          fontWeight: 600,
+          marginBottom: '12px'
+        }}>
+          ✅ BBMP website opened in a new tab.
+          Follow the steps below to submit your complaint.
+        </p>
+
+        <p style={{
+          color: '#94a3b8',
+          fontWeight: 600,
+          marginBottom: '10px'
+        }}>
+          How to file:
+        </p>
+
+        <ol style={{
+          color: '#64748b',
+          paddingLeft: '20px',
+          lineHeight: 1.8
+        }}>
+          <li>1.Open the BBMP website.</li>
+          <li>2.Click <b>SAHAAYA 2.0 (Public Grievance) under services</b>.</li>
+          <li>3.Login or Register.</li>
+          <li>4.Select BBMP (Sahaaya 2.0).</li>
+          <li>5.Click <b>Create</b>.</li>
+          <li>6.Enter the details.</li>
+          <li>7.Paste the generated complaint for description.</li>
+          <li>8.Upload the same image and choose location.</li>
+          <li>9.Submit your complaint.</li>
+        </ol>
+      </div>
+    )}
+
+  </div>
+)}
 
             {/* Escalation Timeline */}
             <div style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '24px' }}>
